@@ -27,6 +27,5 @@ public class Program
         //Delete the record
         timeAndMaterialPageObj.DeleteTimeAndMaterial(driver);     //no such element exception
 
-
     }
 }

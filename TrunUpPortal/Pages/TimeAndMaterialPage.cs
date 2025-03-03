@@ -1,4 +1,6 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -12,11 +14,9 @@ namespace TrunUpPortal.Pages
 
     public class TimeAndMaterialPage
     {
-      //  public IWebElement codeTextbox;
-       // public IWebElement description;
 
 
-        public void CreateTimeRecord(IWebDriver driver)
+        public IWebElement CreateTimeRecord(IWebDriver driver)
         {
 
             //Click on Create New Button
@@ -61,30 +61,39 @@ namespace TrunUpPortal.Pages
 
             //Check if Time record has been created successfully
             IWebElement newRecord = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
-            Console.WriteLine("Code Number:" + newRecord.Text);
+           // Console.WriteLine("Code Number:" + newRecord.Text);
 
-            //Validation
+            return newRecord;
 
-            if (newRecord.Text == "TA_002")
-            {
-                Console.WriteLine("Time record has created successfully!");
-            }
-            else
-            {
-                Console.WriteLine("Time record hasn't created!");
-            }
-        }  
+            ////Validation
+
+            
+            
+            //if (newRecord.Text == "TA_010")
+            //{
+            //    Console.WriteLine("Time record has created successfully!");
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Time record hasn't created!");
+            //}
+        }
 
         //Edit the record which already exists
 
         public void EditTimeAndMaterial(IWebDriver driver)
         {
+            //goto the last page
 
-            //Click on Edit button
+            Wait.WaitToBeClickable(driver, "XPath", "//span[@class='k-icon k-i-seek-e']", 10);
+            IWebElement goToLastPageButton = driver.FindElement(By.XPath("//span[@class='k-icon k-i-seek-e']"));
+            goToLastPageButton.Click();
 
-            Wait.WaitToBeClickable(driver, "XPath", "//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[5]/a[1]", 10);
+            //Click on Edit button of last record
+
+            Wait.WaitToBeClickable(driver, "XPath", "//table[@role=\"grid\"]/tbody/tr[last()]/td[5]/a[1]", 10);
           
-            IWebElement editButton = driver.FindElement(By.XPath("//*[@id='tmsGrid']/div[3]/table/tbody/tr[last()]/td[5]/a[1]"));
+            IWebElement editButton = driver.FindElement(By.XPath("//table[@role=\"grid\"]/tbody/tr[last()]/td[5]/a[1]"));
             editButton.Click();
 
             //To edit code and description page
@@ -93,20 +102,20 @@ namespace TrunUpPortal.Pages
            
            IWebElement codeTextbox = driver.FindElement(By.Id("Code"));
             codeTextbox.Clear();
-            codeTextbox.SendKeys("TA_005");
+            codeTextbox.SendKeys("TA");
 
             Wait.WaitToBeClickable(driver, "Id", "Description", 10);
            
             IWebElement description = driver.FindElement(By.Id("Description"));
             description.Clear();
-            description.SendKeys("Test");
+            description.SendKeys("Auto");
 
             IWebElement saveButton = driver.FindElement(By.Id("SaveButton"));
             saveButton.Click();
 
-            Wait.WaitToBeClickable(driver, "XPath", "//span[@class='k-icon k-i-seek-e']", 10);
-            IWebElement goToLastPageButton = driver.FindElement(By.XPath("//span[@class='k-icon k-i-seek-e']"));
-            goToLastPageButton.Click();
+            Thread.Sleep(3000);
+
+           
 
 
         }
@@ -114,19 +123,49 @@ namespace TrunUpPortal.Pages
 
         public void DeleteTimeAndMaterial(IWebDriver driver)
         {
-            Wait.WaitToBeClickable(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[9]/td[5]/a[2]", 10);
-            IWebElement deleteButton = driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[9]/td[5]/a[2]"));
-            deleteButton.Click();
+            //Goto last page
 
+            Wait.WaitToBeClickable(driver, "XPath", "//span[@class='k-icon k-i-seek-e']", 10);
             IWebElement goToLastPageButton = driver.FindElement(By.XPath("//span[@class='k-icon k-i-seek-e']"));
             goToLastPageButton.Click();
+
+            //Delete the last record from the last page
+
+            Wait.WaitToBeClickable(driver, "XPath", "//table[@role=\"grid\"]/tbody/tr[last()]/td[5]/a[2]", 10);
+            IWebElement deleteButton = driver.FindElement(By.XPath("//table[@role=\"grid\"]/tbody/tr[last()]/td[5]/a[2]"));
+            deleteButton.Click();
+            Thread.Sleep(5000);
+
+
+            //Handle the Alert
+
+            try
+            {
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+                wait.Until(ExpectedConditions.AlertIsPresent());
+
+                //Switch to alert
+
+                IAlert alert = driver.SwitchTo().Alert();
+
+                alert.Accept();
+              //  alert.Dismiss();
+
+                Console.WriteLine("Alert handled successfully");
+            }
+
+            catch(Exception ex)
+            {
+                Console.WriteLine("Alert hasn't handled" + ex.Message);
+            }
+
 
 
 
         }
-       
 
-   }
+
+    }
 
 
         

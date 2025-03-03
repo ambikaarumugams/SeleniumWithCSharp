@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 namespace TrunUpPortal.Pages
 {
     public class HomePage 
+
     {
         public void NavigateToTMPage(IWebDriver driver)
         {

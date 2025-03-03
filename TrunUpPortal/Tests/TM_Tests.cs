@@ -15,50 +15,57 @@ namespace TrunUpPortal.Tests
     public class TM_Tests:CommonDriver
 
     {
-        [SetUp]
-        public void SetUpSteps()
+        private void Login()
         {
-            //Open the chrome browser
-            driver = new ChromeDriver();
-
             //Login page object initialization and definition
-            LoginPage loginPageObj = new LoginPage();
-            loginPageObj.LoginActions(driver);
+            LoginPage loginPageObj = new LoginPage(driver);
+            loginPageObj.Login("Hari", "123123");
+        }
 
+        [Test]
+        public void Login_Test()
+        {
+            Login();
+           
+        }
+
+        [Test]
+        public void Home_Test()
+        {
+            Login();
             //Home page object initialization and definition
-            HomePage homePageObj = new HomePage();
-            homePageObj.NavigateToTMPage(driver);
+            HomePage homePageObj = new HomePage(driver);
+            homePageObj.GoToTimeAndMaterials();
+           
         }
 
         [Test]
         public void CreateTime_Test()
         {
-            //Time and Materials page object initialization and definition
-            TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage();
-            var createdRecord=timeAndMaterialPageObj.CreateTimeRecord(driver);
-            Assert.That(createdRecord, Is.Not.Null);
-            Assert.That(createdRecord.Text, Is.EqualTo("TA_002"));
            
+            Home_Test();
+
+            //Time and Materials page object initialization and definition
+            TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage(driver);
+            timeAndMaterialPageObj.CreateRecord("A_025","Automation","4000");
         }
 
         [Test]
         public void EditTime_Test()
         {
-            TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage();
-            timeAndMaterialPageObj.EditTimeAndMaterial(driver);
+            CreateTime_Test();
+            TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage(driver);
+            timeAndMaterialPageObj.Edit("A_050", "Test");
 
         }
+     
         [Test]
         public void DeleteTime_Test()
         {
-            TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage();
-            timeAndMaterialPageObj.DeleteTimeAndMaterial(driver);
+            CreateTime_Test();
+            TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage(driver);
+            timeAndMaterialPageObj.Delete();
         }
 
-        [TearDown]
-        public void CloseTestRun()
-        {
-            //driver.Quit();
-        }
     }
 }

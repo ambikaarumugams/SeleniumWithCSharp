@@ -3,40 +3,57 @@ using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
+using TrunUpPortal.Utilities;
 
 namespace TrunUpPortal.Pages
 {
-    public class LoginPage
+    public class LoginPage : CommonDriver
     {
-        //Functions that allow users to login to TurnUp Portal
-        public void LoginActions(IWebDriver driver)
+        IWebDriver driver;
+
+        public LoginPage(IWebDriver driver)
         {
-            //Launch TurnUp Portal
-            driver.Navigate().GoToUrl("http://horse.industryconnect.io/");
+            this.driver = driver;
+        }
 
-            //To maximize the window
-            driver.Manage().Window.Maximize();
-
-            //Identify username textbox and enter valid username
-
-            IWebElement userNameTextbox = driver.FindElement(By.Id("UserName"));
-            userNameTextbox.SendKeys("Hari");
+        private IWebElement userNameTextbox => driver.FindElement(By.Id("UserName"));
+        private IWebElement passwordTextbox => driver.FindElement(By.Id("Password"));
+        private IWebElement loginBtn => driver.FindElement(By.XPath("//*[@id='loginForm']/form/div[3]/input[1]"));
 
 
-            //Identify password textbox and enter valid password
+        //enter valid username
 
-            IWebElement passwordTextbox = driver.FindElement(By.Id("Password"));
-            passwordTextbox.SendKeys("123123");
-
-
-            //Identify login button and click on it
-
-            IWebElement loginBtn = driver.FindElement(By.XPath("//*[@id='loginForm']/form/div[3]/input[1]"));
-            loginBtn.Click();
+        public void EnterUserName(string username)
+        {
+            userNameTextbox.SendKeys(username);
         }
 
 
+        //enter valid password
+        public void EnterPassword(string password)
+        {
+            passwordTextbox.SendKeys(password);
+        }
+
+        //click login button
+        public void ClickLoginButton()
+        {
+            loginBtn.Click();
+        }
+
+        //Combined all methods
+        public void Login(string username, string password)
+        {
+            EnterUserName(username);
+            EnterPassword(password);
+            ClickLoginButton();
+        }
     }
 }
+
+
+
+

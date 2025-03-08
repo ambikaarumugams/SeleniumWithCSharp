@@ -1,43 +1,46 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Chrome;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Cryptography.X509Certificates;
+using System.Text;
+using System.Threading.Tasks;
 using TrunUpPortal.Utilities;
 
 namespace TrunUpPortal.Pages
 {
-    public class LoginPage
+    public class LoginPage : CommonDriver
     {
-        private readonly IWebDriver driver;
+        IWebDriver driver;
 
         public LoginPage(IWebDriver driver)
         {
             this.driver = driver;
         }
 
-        //Locators
         private IWebElement userNameTextbox => driver.FindElement(By.Id("UserName"));
         private IWebElement passwordTextbox => driver.FindElement(By.Id("Password"));
         private IWebElement loginBtn => driver.FindElement(By.XPath("//*[@id='loginForm']/form/div[3]/input[1]"));
 
 
-        //Enter valid username
+        //enter valid username
 
         public void EnterUserName(string username)
         {
-            Wait.WaitToBeVisible(driver, "Id", "UserName", 5);
             userNameTextbox.SendKeys(username);
         }
 
 
-        //Enter valid password
+        //enter valid password
         public void EnterPassword(string password)
         {
-            Wait.WaitToBeVisible(driver, "Id", "Password", 5);
             passwordTextbox.SendKeys(password);
         }
 
-        //Click login button
+        //click login button
         public void ClickLoginButton()
         {
-            Wait.WaitToBeClickable(driver, "XPath", "//*[@id='loginForm']/form/div[3]/input[1]", 5);
             loginBtn.Click();
         }
 

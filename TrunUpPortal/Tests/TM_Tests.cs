@@ -1,17 +1,10 @@
 ﻿using NUnit.Framework;
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using TrunUpPortal.Pages;
 using TrunUpPortal.Utilities;
 
 namespace TrunUpPortal.Tests
 {
-    [TestFixture]                                       //Instead of main method
+    [TestFixture]
     public class TM_Tests:CommonDriver
 
     {
@@ -26,7 +19,6 @@ namespace TrunUpPortal.Tests
         public void Login_Test()
         {
             Login();
-           
         }
 
         [Test]
@@ -36,15 +28,12 @@ namespace TrunUpPortal.Tests
             //Home page object initialization and definition
             HomePage homePageObj = new HomePage(driver);
             homePageObj.GoToTimeAndMaterials();
-           
         }
 
         [Test]
         public void CreateTime_Test()
         {
-           
-            Home_Test();
-
+             Home_Test();
             //Time and Materials page object initialization and definition
             TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage(driver);
             timeAndMaterialPageObj.CreateRecord("A_025","Automation","4000");
@@ -56,7 +45,6 @@ namespace TrunUpPortal.Tests
             CreateTime_Test();
             TimeAndMaterialPage timeAndMaterialPageObj = new TimeAndMaterialPage(driver);
             timeAndMaterialPageObj.Edit("A_050", "Test");
-
         }
      
         [Test]

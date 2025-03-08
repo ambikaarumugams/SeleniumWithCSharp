@@ -42,7 +42,5 @@ namespace TrunUpPortal.Utilities
                 wait.Until(ExpectedConditions.ElementIsVisible(By.LinkText(locatorValue)));
             }
         }
-
-
     }
 }

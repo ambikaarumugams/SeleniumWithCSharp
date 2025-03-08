@@ -4,7 +4,7 @@ using TrunUpPortal.Utilities;
 
 namespace TrunUpPortal.Tests
 {
-    [TestFixture]                                       //Instead of main method
+    [TestFixture]
     public class TM_Tests:CommonDriver
 
     {

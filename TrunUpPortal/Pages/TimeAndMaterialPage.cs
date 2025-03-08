@@ -5,7 +5,6 @@ using TrunUpPortal.Utilities;
 
 namespace TrunUpPortal.Pages
 {
-
     public class TimeAndMaterialPage
     {
        private readonly IWebDriver driver;
@@ -131,7 +130,6 @@ namespace TrunUpPortal.Pages
             ClickGoToLastPageButton();
         }
 
-
         //Delete the last record from the last page
       
         private IWebElement deleteButton => driver.FindElement(By.XPath("//table[@role=\"grid\"]/tbody/tr[last()]/td[5]/a[2]"));
@@ -172,12 +170,7 @@ namespace TrunUpPortal.Pages
             ClickDeleteButton();
             ClickAlert();
         }
-
-
-
     }
-
-
 }
 
 

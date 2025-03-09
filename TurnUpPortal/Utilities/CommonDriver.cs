@@ -3,7 +3,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 
 
-namespace TrunUpPortal.Utilities
+namespace TurnUpPortal.Utilities
 {
     public class CommonDriver
     {
@@ -23,7 +23,7 @@ namespace TrunUpPortal.Utilities
         [TearDown]
         public void CloseTestRun()
         {
-            driver.Quit();
+          //  driver.Quit();
         }
     }
 }

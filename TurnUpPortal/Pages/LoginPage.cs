@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
-using TrunUpPortal.Utilities;
+using TurnUpPortal.Utilities;
 
-namespace TrunUpPortal.Pages
+namespace TurnUpPortal.Pages
 {
     public class LoginPage
     {
@@ -16,6 +16,7 @@ namespace TrunUpPortal.Pages
         private IWebElement userNameTextbox => driver.FindElement(By.Id("UserName"));
         private IWebElement passwordTextbox => driver.FindElement(By.Id("Password"));
         private IWebElement loginBtn => driver.FindElement(By.XPath("//*[@id='loginForm']/form/div[3]/input[1]"));
+        private IWebElement loginSuccessfulMsg => driver.FindElement(By.XPath("//a[normalize-space()='Hello hari!']"));
 
 
         //Enter valid username
@@ -39,6 +40,11 @@ namespace TrunUpPortal.Pages
         {
             Wait.WaitToBeClickable(driver, "XPath", "//*[@id='loginForm']/form/div[3]/input[1]", 5);
             loginBtn.Click();
+        }
+
+        public string GetLoginText()
+        {
+            return loginSuccessfulMsg.Text;
         }
 
         //Combined all methods

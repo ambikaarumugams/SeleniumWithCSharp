@@ -1,7 +1,7 @@
 ﻿using OpenQA.Selenium;
-using TrunUpPortal.Utilities;
+using TurnUpPortal.Utilities;
 
-namespace TrunUpPortal.Pages
+namespace TurnUpPortal.Pages
 {
     public class HomePage
 
@@ -16,7 +16,7 @@ namespace TrunUpPortal.Pages
         //Navigate to Time and Material Page
         private IWebElement administrationTab => driver.FindElement(By.XPath("//a[normalize-space()='Administration']"));
         private IWebElement timeAndMaterialsLink => driver.FindElement(By.XPath("//a[normalize-space()='Time & Materials']"));
-       // private IWebElement Create => driver.FindElement(By.XPath("//a[normalize-space()='Create New']"));
+        private IWebElement Create => driver.FindElement(By.XPath("//a[normalize-space()='Create New']"));
 
         //Click on Administration link
         public void ClickAdminLink()
@@ -32,6 +32,12 @@ namespace TrunUpPortal.Pages
             Wait.WaitToBeVisible(driver, "XPath", "//a[normalize-space()='Time & Materials']", 5);
             timeAndMaterialsLink.Click();
         }
+
+        public bool CreateBtnDisplayed()
+        {
+            return Create.Displayed;
+        }
+
 
         //Combined all the methods
         public void GoToTimeAndMaterials()

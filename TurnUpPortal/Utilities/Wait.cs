@@ -3,7 +3,7 @@ using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
 
-namespace TrunUpPortal.Utilities
+namespace TurnUpPortal.Utilities
 {
     public class Wait
     {

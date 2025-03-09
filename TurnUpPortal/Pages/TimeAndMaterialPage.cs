@@ -1,9 +1,9 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
-using TrunUpPortal.Utilities;
+using TurnUpPortal.Utilities;
 
-namespace TrunUpPortal.Pages
+namespace TurnUpPortal.Pages
 {
     public class TimeAndMaterialPage
     {
@@ -24,7 +24,10 @@ namespace TrunUpPortal.Pages
         private IWebElement priceTextbox => driver.FindElement(By.Id("Price"));
         private IWebElement saveButton => driver.FindElement(By.Id("SaveButton"));               //Click save button
         private IWebElement goToLastPageButton => driver.FindElement(By.XPath("//span[@class='k-icon k-i-seek-e']"));
-        private IWebElement newRecord => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+        private IWebElement newCode => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+        private IWebElement newDescription => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+        private IWebElement newPrice => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]"));
+
 
         //Methods
         public void ClickCreateNewButton()
@@ -77,6 +80,25 @@ namespace TrunUpPortal.Pages
             goToLastPageButton.Click();
         }
 
+        public string GetNewCode()
+        {
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 5);
+            return newCode.Text;
+        }
+
+        public string GetNewDescription()
+        {
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]", 5);
+            return newDescription.Text;
+        }
+
+        public string GetNewPrice()
+        {
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[4]", 5);
+            return newPrice.Text;
+        }
+
+
         //Combined all methods
         public void CreateRecord(string code, string description, string price)
         {
@@ -94,6 +116,9 @@ namespace TrunUpPortal.Pages
         //Edit the record which already exists
 
         private IWebElement editButton => driver.FindElement(By.XPath("//table[@role=\"grid\"]/tbody/tr[last()]/td[5]/a[1]"));
+        private IWebElement editedCode => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+        private IWebElement editedDescription => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+
 
         //Edit Methods
         public void ClickEditButton()
@@ -119,6 +144,18 @@ namespace TrunUpPortal.Pages
             ClickSaveButton();
         }
 
+        public string GetEditedCode()
+        {
+            Wait.WaitToBeVisible(driver,"XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 5);
+            return editedCode.Text;
+        }
+
+        public string GetEditedDescription()
+        {
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]", 5);
+            return editedDescription.Text;
+        }
+
         //Combined all methods of edit functionality
 
         public void Edit(string code, string description)
@@ -133,6 +170,9 @@ namespace TrunUpPortal.Pages
         //Delete the last record from the last page
       
         private IWebElement deleteButton => driver.FindElement(By.XPath("//table[@role=\"grid\"]/tbody/tr[last()]/td[5]/a[2]"));
+        private IWebElement lastCode => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]"));
+        private IWebElement lastDescription => driver.FindElement(By.XPath("//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]"));
+
 
         //Delete Methods 
         public void ClickDeleteButton()
@@ -163,13 +203,26 @@ namespace TrunUpPortal.Pages
             }
         }
 
+        public string GetLastCode()
+        {
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[1]", 5);
+            return lastCode.Text;
+        }
+
+        public string GetLastDescription()
+        {
+            Wait.WaitToBeVisible(driver, "XPath", "//*[@id=\"tmsGrid\"]/div[3]/table/tbody/tr[last()]/td[3]", 5);
+            return lastDescription.Text;
+        }
+
         //Combined all delete methods
         public void Delete()
         {
             ClickGoToLastPageButton();
             ClickDeleteButton();
             ClickAlert();
-        }
+            ClickGoToLastPageButton();
+        } 
     }
 }
 
